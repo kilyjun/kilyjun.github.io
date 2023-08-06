@@ -108,19 +108,18 @@ if uploaded_file is not None:
             video_frames.append(Image.open(bio))
 
     # Create a GIF animation
-    gif_path = "/tmp/drawing.gif"
+    gif_data = io.BytesIO()
     if video_frames:
         video_frames[0].save(
-            gif_path,
+            gif_data,
             append_images=video_frames[1:],
+            format='GIF',
             save_all=True,
             duration=100,  # Duration for each frame
             loop=0  # Loop forever
         )
 
-        # Open the GIF and display it
-        with open(gif_path, "rb") as f:
-            gif_data = f.read()
+        gif_data.seek(0)  # Move the pointer back to the start of the data
         st.image(gif_data)
     else:
         st.write("No frames were generated. Try reducing the drawing speed.")
