@@ -120,6 +120,17 @@ if uploaded_file is not None:
         )
 
         gif_data.seek(0)  # Move the pointer back to the start of the data
+
+        # Display the GIF
         st.image(gif_data)
+
+        # Add a download button for the GIF
+        gif_data.seek(0)  # Move the pointer back to the start of the data
+        st.download_button(
+            label="Download GIF",
+            data=gif_data,
+            file_name="drawing.gif",
+            mime="image/gif",
+        )
     else:
         st.write("No frames were generated. Try reducing the drawing speed.")
