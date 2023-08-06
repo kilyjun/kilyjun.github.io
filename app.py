@@ -54,7 +54,11 @@ if uploaded_file is not None:
     distance_threshold = 10
     max_iterations_without_point_within_threshold = 10
     iterations_without_point_within_threshold = 0
-    while endpoints:
+
+    max_iterations = 10000  # Adjust this value as needed
+    iterations = 0
+
+    while endpoints and iterations < max_iterations:
         current_point = spline_points[-1]
         distances = distance.cdist([current_point], endpoints)
         closest_index = np.argmin(distances)
@@ -74,6 +78,7 @@ if uploaded_file is not None:
             iterations_without_point_within_threshold = 0
 
         progress_bar.progress(len(spline_points) / (len(endpoints) + len(spline_points)))
+        iterations += 1
 
     spline_points = np.array(spline_points)
     tck, u = splprep([spline_points[:, 0], spline_points[:, 1]], s=1.0)
