@@ -86,7 +86,7 @@ if uploaded_file is not None:
     video_frames = []
 
     line_thickness = st.sidebar.slider('Line Thickness', 1, 10, 2)
-
+    drawing_speed = st.sidebar.slider('Drawing Speed', 1, 100, 10)
     average_distance = np.average(distance.cdist(spline_points[:-1], spline_points[1:]))
     for i in range(1, len(x_new)):
         if i == len(x_new) - 1 and distance.euclidean((x_new[i-1], y_new[i-1]), (x_new[i], y_new[i])) > average_distance:
@@ -102,7 +102,7 @@ if uploaded_file is not None:
 
         draw.line([(x_new[i-1], y_new[i-1]), (x_new[i], y_new[i])], fill=color, width=int(thickness))
 
-        if i % 10 == 0:  # Change this value to control the number of frames in the GIF
+        if i % drawing_speed == 0:  # Now uses the slider value
             bio = io.BytesIO()
             drawing.save(bio, format='PNG')
             video_frames.append(Image.open(bio))
