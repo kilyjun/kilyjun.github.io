@@ -3,7 +3,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     var scrollPerSecond = window.innerHeight / 100; // Adjust this to change scroll sensitivity
     var lastKnownScrollPosition = 0;
     var ticking = false;
-    var videos = ['cocacola3.mp4', 'bird.mp4', 'nike2.mp4']; // Add your videos here
+    var videos = ['cocacola3.mp4', 'bird.mp4', 'nike2.mp4', 'musk.mp4']; // Add your videos here
 
     function setupVideo(container) {
         var video = container.querySelector('video');
