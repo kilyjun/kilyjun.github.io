@@ -7,6 +7,37 @@ from PIL import Image, ImageDraw
 import io
 import base64
 
+# Read the HTML, CSS, and JS files
+with open('website.html', 'r') as f:
+    html_content = f.read()
+
+with open('website.css', 'r') as f:
+    css_content = f.read()
+
+with open('website.js', 'r') as f:
+    js_content = f.read()
+
+# Inline the CSS and JS within the HTML
+html_content_with_css_and_js = f"""
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    {css_content}
+    </style>
+</head>
+<body>
+{html_content}
+<script>
+{js_content}
+</script>
+</body>
+</html>
+"""
+
+# Display the HTML content in Streamlit
+st.markdown(html_content_with_css_and_js, unsafe_allow_html=True)
+
 def compute_edge_intensity(img, point, neighborhood_size):
     x, y = point
     x_min, x_max = max(0, x - neighborhood_size), min(img.shape[1], x + neighborhood_size)
