@@ -7,6 +7,7 @@ from PIL import Image, ImageDraw
 import io
 import base64
 
+
 def compute_edge_intensity(img, point, neighborhood_size):
     x, y = point
     x_min, x_max = max(0, x - neighborhood_size), min(img.shape[1], x + neighborhood_size)
