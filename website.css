@@ -1,0 +1,28 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* align content to start from top */
+}
+
+
+.first-video {
+    margin-top: 0;
+}
+
+.video-container {
+    width: 800; /* fixed width */
+    height: 300px; /* fixed height */
+    position: relative;
+    margin: 1em; /* add some margin between the videos */
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* change from 'cover' to 'contain' */
+}
