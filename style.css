@@ -8,11 +8,20 @@ body {
     line-height: 1.6;
 }
 
-/* Header Styles */
+/* Updated Header Styles */
 .header {
     background-color: #007acc;
     padding: 10px 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+main {
+    padding-top: 80px; /* Add some padding to prevent content from being hidden under the fixed navbar */
 }
 
 .navbar {
@@ -21,6 +30,18 @@ body {
     align-items: center;
     max-width: 1100px;
     margin: 0 auto;
+}
+
+/* Navbar Brand (Your Name) */
+.navbar-brand {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.navbar-brand:hover {
+    text-decoration: underline;
 }
 
 .nav-list {
