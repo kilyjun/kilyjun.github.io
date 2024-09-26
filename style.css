@@ -107,8 +107,9 @@ main {
 }
 
 .profile-photo {
-    width: 100%;
+    width: 90%;
     border-radius: 10px;
+    height:90%
 }
 
 /* Section Styles */
