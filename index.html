@@ -11,13 +11,11 @@
 <body>
     <header class="header">
         <nav class="navbar">
-            <a href="#about" class="navbar-brand"></a>
-            <ul class="nav-list">
-                <!-- <li><a href="#education">Education</a></li> -->
-                <li><a href="#research">Research</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <!-- <li><a href="#misc">Misc</a></li> -->
-            </ul>
+            <ul class="nav-list">
+                <li><a href="#about">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#projects">Projects</a></li>
+            </ul>
             <div class="social-icons">
                 <!-- <a href="https://www.linkedin.com/in/kil-junhyeok/" target="_blank"><i class="fab fa-linkedin"></i></a> -->
             </div>
@@ -28,8 +26,11 @@
             <div class="about-grid">
                 <div class="about-text">
                     <h1>Junhyeok Kil</h1>
-                    <p>I am an undergraduate research assistant at the <a href="https://www.purdue.edu/cmsc/index.php">Composites Manufacturing & Simulation Center</a> at Purdue University. I work on scaling advanced machine learning methods to solve composite manufacturing problems. My current focus is on solving parametric problems in additive manufacturing applications.</p>
-                    <p>I live by this <a href="https://www.appleseeds.org/Jack-London_Credo.htm">credo</a>.</p>
+                    <p>I am a fourth-year undergraduate student in the Department of Computer Science at Purdue University, where I also serve as a research assistant at the <a href="https://www.purdue.edu/cmsc/index.php" target="_blank" rel="noopener noreferrer">Composites Manufacturing & Simulation Center</a>. I am very thankful to be supervised by <a href="https://www.purdue.edu/cmsc/tech-area-bio/barocio.php" target="_blank" rel="noopener noreferrer">Dr. Eduardo Barocio</a>.</p>
+                    <p>I will graduate in December 2025 with a B.S. in Data Science, a B.S. in Mathematics, and a B.S. in Statistics. In January 2026, I will begin my Ph.D. in <a href="https://business.purdue.edu/academics/quantitative-methods/" target="_blank" rel="noopener noreferrer">Quantitative Methods</a> at Purdue University's School of Business.</p>
+                    <p>My previous work spans areas including simulation, machine learning, and data-driven application development across both academic and industry-facing projects. Moving forward, I am interested in building a strong theoretical foundation in mathematics and data science, with a focus on problems involving probability, complexity, and uncertainty.</p>
+                    <p>I live by this <a href="https://www.appleseeds.org/Jack-London_Credo.htm" target="_blank" rel="noopener noreferrer">credo</a>.</p>
+
                 </div>
                 <img src="img/uhuru.jpg" alt="Junhyeok Kil" class="profile-photo">
             </div>
@@ -89,15 +90,29 @@
 
         <!-- Research Section -->
         <section id="research" class="container">
-            <h2>Research</h2>
+            <h2>Past Research</h2>
             <div class="accordion">
                 <div class="accordion-item">
                     <button class="accordion-header">Physics-Informed Neural Networks in Additive Manufacturing</button>
                     <div class="accordion-content">
-                        <p>I am exploring the application of Physics-Informed Neural Networks (PINNs) to attain parametric solutions for various problems in composite manufacturing processes.</p>
+                        <p>I explored the application of Physics-Informed Neural Networks (PINNs) to attain parametric solutions for various problems in composite manufacturing processes. This work has been published at SAMPE 2025 Conference Proceedings.</p>
                         <img src="img/pinns.png" alt="Physics-Informed Neural Networks in Additive Manufacturing" class="screenshot">
                         <img src="img/pinns2.png" alt="Physics-Informed Neural Networks in Additive Manufacturing" class="screenshot">
-                        <p><a href="https://doi.org/10.33599/nasampe/s.25.0137">[LINK]</a></p>
+                        <a href="https://doi.org/10.33599/nasampe/s.25.0137" target="_blank" rel="noopener noreferrer">[Paper]</a>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Physics-based Simulation Software for Additive Manufacturing</button>
+                    <div class="accordion-content">
+                        <p>This research involves developing a physics-based framework that automates the prediction and shape compensation for 3D-printed tooling made from composite materials. The framework integrates various inputs to carry out thermomechanical analysis, helping manufacturers reduce waste and improve product performance.</p>
+                        <video class="screenshot" autoplay loop muted>
+                            <source src="vid/shapechange1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <video class="screenshot" autoplay loop muted>
+                            <source src="vid/shapechange3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
                 <div class="accordion-item">
@@ -111,36 +126,25 @@
                         </video>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <button class="accordion-header">Physics-based Shape Compensation for Composite Tooling</button>
-                    <div class="accordion-content">
-                        <p>This research involves developing a physics-based framework that automates the prediction and shape compensation for 3D-printed tooling made from composite materials. The framework integrates various inputs to carry out thermomechanical analysis, helping manufacturers reduce waste and improve product performance.</p>
-                        <video class="screenshot" autoplay loop muted>
-                            <source src="vid/shapechange1.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <video class="screenshot" autoplay loop muted>
-                            <source src="vid/shapechange3.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                </div>
             </div>
         </section>
 
         <!-- Projects Section -->
         <section id="projects" class="container">
             <h2>Projects</h2>
-            <div class="accordion-item">
-                <button class="accordion-header">LiDAR Data Acquisition and Visualization Tool</button>
-                <div class="accordion-content">
-                    <p>I developed an application for real-time acquisition, processing, and visualization of LiDAR data.</p>
-                    <div class="media-scroll-container">
-                        <img src="img/box_detection.jpg" alt="LiDAR Data Acquisition and Visualization Tool" class="screenshot">
-                        <img src="img/container.jpg" alt="LiDAR Data Acquisition and Visualization Tool" class="screenshot">
+            <div class="accordion">
+
+                <div class="accordion-item">
+                    <button class="accordion-header">LiDAR Data Acquisition and Visualization Tool</button>
+                    <div class="accordion-content">
+                        <p>I developed an application for real-time acquisition, processing, and visualization of LiDAR data.</p>
+                        <div class="media-scroll-container">
+                            <img src="img/box_detection.jpg" alt="LiDAR Data Acquisition and Visualization Tool" class="screenshot">
+                            <img src="img/container.jpg" alt="LiDAR Data Acquisition and Visualization Tool" class="screenshot">
+                        </div>
                     </div>
                 </div>
-            <div class="accordion">
+
                 <div class="accordion-item">
                     <button class="accordion-header">Single Line Art Generator</button>
                     <div class="accordion-content">
@@ -154,24 +158,46 @@
                             Your browser does not support the video tag.
                         </video> -->
                         <video class="screenshot" autoplay loop muted>
-                            <source src="vid/bird.mp4"video/mp4">
+                            <source src="vid/bird.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
                 </div>
+
                 <div class="accordion-item">
                     <button class="accordion-header">Geospatial Dashboard</button>
                     <div class="accordion-content">
                         <p>I developed a geospatial dashboard that displays all past projects in an interactive format. This dashboard allows users to visualize project data across different geographical locations and analyze patterns over time.</p>
                         <video class="screenshot" autoplay loop muted>
-                            <source src="vid/gvhvideo.mov"video/mp4">
+                            <source src="vid/gvhvideo.mov" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                        <p><a href="https://gvh-project-dashboard.streamlit.app/">[LINK]</a></p>
+                        <p><a href="https://gvh-project-dashboard.streamlit.app/" target="_blank" rel="noopener noreferrer">[Website]</a></p>
                     </div>
                 </div>
+
             </div>
         </section>
+
+        <section id="notes" class="container">
+            <h2>Notes</h2>
+            <div class="accordion">
+
+                <div class="accordion-item">
+                    <button class="accordion-header">Theoretical Statistics</button>
+                    <div class="accordion-content">
+                        <p>Personal notes summarizing Keener's textbook on Theoretical Statistics.</p>
+                        <ul class="note-links">
+                            <li><a href="notes/TS_Chapter1 (1).pdf" target="_blank" rel="noopener noreferrer">Chapter 1. Probability and Measure</a></li>
+                            <li><a href="notes/TS_Lecture_2_Part_1 (1).pdf" target="_blank" rel="noopener noreferrer">Chapter 2a. Exponential Families</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
 
         <!-- Misc Section -->
         <!-- <section id="misc" class="container">
@@ -181,12 +207,12 @@
 
         <section id="contact" class="container">
             <h2>Contact</h2>
-            <p>Email: kilj [at] purdue [dot] edu</p>
+            <p>Email: kilj@purdue.edu</p>
         </section>
 
-        <footer class="footer">
+        <!-- <footer class="footer">
             <p>Copyright &copy; 2024 Junhyeok Kil. All rights reserved.</p>
-        </footer>
+        </footer> -->
     </main>
     <script src="script.js"></script>
 </body>
