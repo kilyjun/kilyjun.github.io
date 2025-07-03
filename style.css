@@ -1,181 +1,121 @@
-/* General Body Styles */
-body {
-    font-family: 'Nunito', sans-serif;
+/* Core Reset and Base Styles */
+* {
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
-    color: #333;
-    line-height: 1.6;
+    box-sizing: border-box;
 }
 
-/* Updated Header Styles */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+/* Header / Navbar */
 .header {
-    background-color: #007acc;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-bottom: 1px solid #eee;
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
-}
-
-main {
-    padding-top: 80px; /* Add some padding to prevent content from being hidden under the fixed navbar */
+    padding: 12px 0;
 }
 
 .navbar {
+    max-width: 1100px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-/* Navbar Brand (Your Name) */
-.navbar-brand {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.navbar-brand:hover {
-    text-decoration: underline;
+    padding: 0 20px;
 }
 
 .nav-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
     display: flex;
-    gap: 20px;
-}
-
-.nav-list li {
-    display: inline;
+    gap: 30px;
+    list-style: none;
 }
 
 .nav-list a {
-    color: #ffffff;
     text-decoration: none;
-    font-size: 1.1em;
+    color: #007acc;
+    font-weight: 600;
+    font-size: 1em;
+    transition: color 0.2s ease;
 }
 
 .nav-list a:hover {
-    text-decoration: underline;
+    color: #005f99;
 }
 
 /* Social Icons */
 .social-icons a {
-    color: #ffffff;
-    font-size: 1.5em;
+    color: #007acc;
+    font-size: 1.4em;
     margin-left: 15px;
-    text-decoration: none;
+    transition: opacity 0.3s ease;
 }
 
 .social-icons a:hover {
-    color: #ffffff;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
-/* Main Styles */
+/* Main Wrapper */
 main {
-    padding: 40px 20px;
     max-width: 1100px;
     margin: 0 auto;
+    padding: 100px 20px 60px;
 }
 
-/* About Section Styles */
+/* Section Headers */
+section h2 {
+    font-size: 1.8em;
+    color: #007acc;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* About Section */
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 40px;
     align-items: center;
 }
 
 .about-text h1 {
-    margin: 0;
-    font-size: 2.5em;
-    color: #007acc;
+    font-size: 2.2em;
+    color: #222;
+    margin-bottom: 10px;
 }
 
 .about-text p {
+    font-size: 1.05em;
     margin: 10px 0;
-    font-size: 1.2em;
     color: #555;
 }
 
 .profile-photo {
-    width: 90%;
-    border-radius: 10px;
-    height:90%
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Section Styles */
-section {
-    margin-bottom: 40px;
-}
-
-section h2 {
-    font-size: 2em;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    color: #007acc;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-/* News Section */
-.news-container {
-    position: relative;
-    max-height: 400px;
-    overflow-y: auto;
-    padding-right: 10px;
-}
-
-.news-header {
-    position: sticky;
-    top: 0;
-    background-color: #fff;
-    z-index: 10;
-    padding-top: 0;
-    margin-top: 0;
-    padding-bottom: 10px; /* Ensure consistent padding */
-    margin-bottom: 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow to distinguish the header */
-}
-
-.news-content {
-    margin-top: 10px;
-}
-
-.news-item {
-    margin-bottom: 20px;
-}
-
-.news-date {
-    font-weight: bold;
-    color: #007acc;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.news-item h3 {
-    margin: 0;
-    font-size: 1.1em;
-    color: #333;
-}
-
-/* Accordion Styles */
+/* Accordion */
 .accordion {
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    border: 1px solid #eee;
+    border-radius: 12px;
     overflow: hidden;
 }
 
 .accordion-item {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
 }
 
 .accordion-item:last-child {
@@ -183,49 +123,93 @@ section h2 {
 }
 
 .accordion-header {
-    background: #f9f9f9;
+    background: #fafafa;
+    padding: 16px 20px;
+    font-size: 1.1em;
+    font-weight: 600;
     cursor: pointer;
-    padding: 20px;
-    width: 100%;
     border: none;
+    width: 100%;
     text-align: left;
-    outline: none;
-    font-size: 1.2em;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background 0.2s ease;
 }
 
 .accordion-header:hover {
-    background: #e9e9e9;
-    color: #007acc;
+    background: #f0f0f0;
 }
 
 .accordion-content {
     display: none;
     padding: 20px;
-    background: #fff;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
 }
 
-/* Horizontal Scrolling Video Container */
+.accordion-content p {
+    color: #444;
+}
+
+/* Media Content */
+.screenshot {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Scrollable Media Container */
+.media-scroll-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
 .video-scroll-container {
     display: flex;
     gap: 20px;
     overflow-x: auto;
+    padding: 10px 0;
+}
+
+/* Contact Section */
+#contact {
     padding-top: 20px;
+    font-size: 1.1em;
 }
 
-.screenshot {
-    width: 100%;
-    max-width: 500px;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+#contact a {
+    color: #007acc;
+    text-decoration: none;
 }
 
-/* Footer Styles */
-.footer {
-    text-align: center;
-    padding: 20px 0;
-    border-top: 1px solid #eee;
-    background-color: #fff;
-    margin-top: 40px;
+#contact a:hover {
+    text-decoration: underline;
 }
+
+/* Ensure consistent bottom spacing for all sections */
+section.container {
+    margin-bottom: 60px;
+}
+
+/* Remove any last-child margin issues inside accordions */
+.accordion-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Add a bit of space after each accordion to avoid cramping */
+.accordion {
+    margin-bottom: 20px;
+}
+
+.note-links {
+    list-style: none;      /* Removes the bullet */
+    padding-left: 0;       /* Removes default indent */
+    margin-top: 10px;
+}
+
+.note-links li {
+    margin-bottom: 8px;
+}
+
