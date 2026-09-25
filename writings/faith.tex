@@ -1,0 +1,750 @@
+%!TEX program = lualatex
+% 보편적 신앙 — classical essay layout (white page, numbered sections, footnotes)
+\documentclass[11pt]{article}
+
+\usepackage{iftex}
+\ifLuaTeX\else
+  \PackageError{faith}{This document requires LuaLaTeX}{Run lualatex.}
+\fi
+
+% --- 제목·이름·연도: 여기서 바꾸세요 ------------------------------------------
+\newcommand{\essaytitle}{보편적 신앙}
+\newcommand{\essayauthor}{길준혁}
+\newcommand{\essayyear}{2026}
+
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage[tracking=true,protrusion=false,expansion=false]{microtype}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{titlesec}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,calc}
+
+% Garamond carries the Latin letters; Hangul falls back to a Myeongjo face,
+% with matching bold and a gently slanted italic.
+\directlua{
+  luaotfload.add_fallback("hangul",   {"Noto Serif CJK KR:mode=harf;"})
+  luaotfload.add_fallback("hangulbf", {"Noto Serif CJK KR/B:mode=harf;"})
+  luaotfload.add_fallback("hangulit", {"Noto Serif CJK KR:mode=harf;slant=0.2;"})
+}
+\defaultfontfeatures{Renderer=HarfBuzz}
+\setmainfont{EB Garamond}[
+  Numbers={Lining,Proportional},
+  Ligatures={TeX,Common},
+  UprightFeatures={RawFeature={fallback=hangul}},
+  BoldFeatures={RawFeature={fallback=hangulbf}},
+  ItalicFeatures={RawFeature={fallback=hangulit}},
+  BoldItalicFeatures={RawFeature={fallback=hangulbf}},
+]
+
+% --- page ---------------------------------------------------------------------
+\definecolor{paper}{HTML}{FFFFFF}
+\definecolor{ink}{HTML}{111111}
+\definecolor{inkgray}{HTML}{6B6B6B}
+\definecolor{rulegray}{HTML}{9A9A9A}
+\color{ink}
+
+\geometry{a4paper, top=30mm, bottom=30mm, left=32mm, right=32mm}
+
+\setlength{\parindent}{1.1em}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{3em}
+\tolerance=2500
+\linespread{1.35}
+\pagestyle{plain}
+\raggedbottom
+\frenchspacing
+
+% --- sections -----------------------------------------------------------------
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection.}{0.6em}{}
+\titlespacing*{\section}{0pt}{3.2ex plus 1ex minus .3ex}{1.4ex plus .3ex}
+
+% --- figures and tables -------------------------------------------------------
+\captionsetup{
+  font=small, labelfont=bf, labelsep=period,
+  justification=justified, singlelinecheck=true,
+  margin=4mm, skip=6pt
+}
+\captionsetup[figure]{name={그림}}
+\captionsetup[table]{name={표}, position=above, skip=6pt}
+\setlength{\heavyrulewidth}{0.6pt}
+\setlength{\lightrulewidth}{0.35pt}
+\pgfplotsset{
+  plate/.style={
+    axis line style={ink,line width=.6pt},
+    tick align=inside,
+    tick style={ink,line width=.4pt},
+    tick label style={font=\footnotesize},
+    /pgf/number format/assume math mode=true,
+    label style={font=\small\itshape},
+    every axis plot/.append style={line cap=round},
+  }
+}
+
+% PCA sample: 90 points, 10 dimensions, two dominant latent factors (numpy seed 7)
+\def\pcascatter{(-0.149,-0.325) (0.139,0.652) (0.343,0.569) (-0.342,-0.818) (0.401,0.460) (-0.824,-0.485) (-0.286,0.412) (-0.032,-0.602) (1.281,0.196) (1.709,0.708) (1.947,0.177) (1.345,-0.267) (-0.290,-0.188) (2.441,0.195) (-0.274,-0.209) (1.500,0.185) (0.957,0.345) (-1.133,0.318) (-0.005,-0.692) (0.504,0.106) (-0.480,-0.108) (0.967,-0.062) (-1.660,0.729) (-1.120,-0.198) (0.652,-1.322) (-1.108,0.756) (-0.199,-0.381) (0.069,-0.539) (-0.009,-0.448) (-2.016,0.415) (-0.417,0.169) (-0.361,0.596) (0.486,0.131) (-1.016,-0.783) (1.176,0.553) (-1.138,1.104) (0.120,-0.157) (-1.531,-0.543) (0.059,0.116) (0.211,-1.064) (0.333,0.156) (-0.757,-0.122) (-0.130,0.490) (-0.377,0.106) (-1.407,-0.592) (-0.023,-0.535) (0.258,-0.924) (-0.176,-0.465) (1.239,-0.166) (1.717,0.986) (-0.081,0.292) (-0.246,-1.563) (0.644,0.346) (-0.385,-0.353) (0.080,-0.153) (-0.947,-0.619) (0.971,-0.083) (-0.310,0.588) (-0.565,0.488) (-1.224,-0.076) (-0.376,0.177) (-0.002,1.118) (0.945,-0.373) (2.326,-0.374) (1.719,-0.544) (0.763,-0.517) (-0.423,0.962) (-1.658,-1.205) (-0.107,0.030) (-0.111,0.512) (-1.412,0.136) (-0.178,0.515) (0.333,0.779) (-1.739,-0.160) (-1.301,-0.149) (0.388,0.087) (0.468,-0.090) (0.215,0.075) (1.229,0.349) (-2.129,0.303) (1.000,-0.402) (-1.846,0.906) (-0.026,0.393) (1.759,-0.490) (0.053,-0.013) (0.685,-0.316) (0.376,-0.014) (0.848,0.804) (-1.730,0.210) (-0.604,-0.209)}
+\def\pcascree{(1,72.1) (2,21.4) (3,1.2) (4,1.0) (5,0.9) (6,0.9) (7,0.7) (8,0.6) (9,0.6) (10,0.6)}
+\def\pcacum{(1,72.1) (2,93.5) (3,94.6) (4,95.6) (5,96.6) (6,97.5) (7,98.2) (8,98.8) (9,99.4) (10,100.0)}
+\def\pcascreetwo{(1,72.1) (2,21.4)}
+\def\pcatwo{93}
+
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={\essaytitle}, pdfauthor={\essayauthor}}
+\urlstyle{same}
+
+
+\begin{document}
+
+% =============================================================================
+\begin{center}
+  {\fontsize{22}{28}\selectfont\textls[40]{\essaytitle}}\par
+  \vspace{1.4em}
+  {\large\essayauthor}\par
+  \vspace{0.35em}
+  {\normalsize\essayyear}\par
+\end{center}
+
+\vspace{2.2em}
+
+\noindent 나는 하나님의 존재를 완전히 증명할 수 있다고 생각하지 않는다.
+그렇다고 그런 하나님을 믿는 게 비합리적이라고도 생각하지 않는다. 내가 생각하는
+신앙은 오히려 이런 쪽에 가깝다. 유한한 인간이 무한한 존재를 완전히 이해할 수
+없다는 걸 인정하면서도, 그렇다고 그 가능성을 닫아버리지는 않고 그 안에서
+살아보는 것.
+
+이걸 설명할 때 나한테 가장 잘 맞는 비유가 수학에서의 무한이다. 우리는 모든
+의미에서 무한을 직접 경험할 수 없다. 자연수를 하나씩 계속 센다고 해서 어느
+순간 무한에 도착하는 것도 아니다. 끝없이 이어지는 소수점 아래 자릿수 역시
+우리가 그 끝을 실제로 확인할 수는 없다.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,line width=.45pt,color=ink,
+                    font=\small]
+  % ---- the finite: a whole that fits inside one boundary ----
+  \begin{scope}[shift={(0,0)}]
+    \draw[line width=.6pt] (0,0) ellipse[x radius=2.05,y radius=1.25];
+    \draw[inkgray,line width=.25pt] (0,0) ellipse[x radius=1.93,y radius=1.13];
+    \foreach \p/\n in {(-1.2,.35)/1,(-.55,.75)/2,(.25,.55)/3,(1.05,.7)/4,
+                       (-.85,-.4)/5,(0,-.2)/6,(.85,-.25)/7,(-.15,-.8)/8}{
+      \fill \p circle[radius=1.5pt];
+      \node[font=\scriptsize,anchor=south west,inner sep=1pt] at \p {\n};
+    }
+    \node at (0,-1.75) {\textls[80]{\textsc{Finite}} \,· 유한};
+    \node[font=\footnotesize\itshape,align=center] at (0,-2.3)
+      {경계 하나 안에 전체가 담긴다};
+  \end{scope}
+  % ---- the infinite: a count that never arrives ----
+  \begin{scope}[shift={(3.2,0)}]
+    \draw[line width=.6pt] (0,.55) -- (6.2,.55);
+    \foreach \i in {1,...,14}{
+      \pgfmathsetmacro{\xx}{6.2*(1-0.84^\i)/(1-0.84^14)*0.93}
+      \pgfmathsetmacro{\op}{max(0.12,1-0.065*\i)}
+      \pgfmathsetmacro{\rr}{max(0.5,1.6-0.08*\i)}
+      \fill[opacity=\op] (\xx,.55) circle[radius=\rr pt];
+      \ifnum\i<7
+        \node[font=\scriptsize,above,opacity=\op] at (\xx,.6) {\i};
+      \fi
+    }
+    \draw[-{Stealth[length=5pt]},line width=.6pt] (6.2,.55) -- (6.9,.55)
+      node[right] {$\infty$};
+    \node[font=\scriptsize\itshape,inkgray] at (4.9,1.25) {끝에 닿지 않는다};
+    % a decimal whose digits recede
+    \node[anchor=west] at (0,-.45) {$\tfrac{1}{3} = 0.$};
+    \foreach \i in {1,...,18}{
+      \pgfmathsetmacro{\op}{max(0.08,1-0.055*\i)}
+      \pgfmathsetmacro{\sz}{max(4.5,9.5-0.28*\i)}
+      \node[anchor=west,inner sep=0,opacity=\op,
+            font=\fontsize{\sz}{\sz}\selectfont]
+        at ({0.98+0.33*\i-0.0055*\i*\i},-.45) {3};
+    }
+    \node[inkgray] at (6.55,-.45) {$\cdots$};
+    \node at (3.3,-1.75) {\textls[80]{\textsc{Infinite}} \,· 무한};
+    \node[font=\footnotesize\itshape,align=center] at (3.3,-2.3)
+      {세어도, 써 내려가도 끝나지 않는다};
+  \end{scope}
+  \draw[inkgray,line width=.3pt] (2.6,-2.4) -- (2.6,1.3);
+\end{tikzpicture}
+\caption{유한과 무한. 왼쪽의 유한한 모임은 하나의 경계 안에 전부 들어온다.
+오른쪽의 자연수와 순환소수는 아무리 이어 써도 마지막 항에 이르지 않는다.
+우리는 그 끝을 본 적이 없지만, 유한한 앞부분만으로도 무한이 무엇을
+뜻하는지 안다.}
+\label{fig:finite}
+\end{figure}
+
+그런데도 우리는 무한이라는 개념을 이해하고 사용한다. 자연수를 계속 더해도
+마지막 수가 없다는 걸 알고, 어떤 수의 소수점 아래 자릿수가 끝없이 이어진다는
+것도 이해한다. 즉 무한을 직접 본 적은 없지만, 유한한 것들을 통해 무한이 무엇을
+뜻하는지 어느 정도는 알 수 있다(그림~\ref{fig:finite}).
+나는 하나님도 비슷하다고 생각한다.
+
+% =============================================================================
+\section{유한한 것과 무한한 것은 같은 방식으로 알 수 없다}
+
+나는 인간의 이성이나 오감을 믿지 않는 사람이 아니다. 오히려 반대에 더 가깝다.
+이성과 오감이야말로 지극히 인간적인 감각이고, 오히려 영(靈)의
+세계는 나한테 낯설다. 내 앞에 책상이 있는지, 사람이 있는지, 어떤 일이 실제로
+일어났는지 같은 건 인간이 충분히 판단할 수 있다. 보고, 듣고, 만지고,
+논리적으로 생각하고, 다른 사람과 경험을 비교하고 검증할 수도 있다. 의리와
+사랑도 여기에 포함된다. 이것들은
+전부 우리와 마찬가지로 유한한 세계 안에 있는 것들이다.
+
+그런데 무한은 조금 다르다. 여기서 “완전히 이해할 수 없다”는 말은 무한에 대해
+아무것도 모른다거나 생각조차 할 수 없다는 뜻이 아니다. 오늘날 수학은 무한이라는
+개념을 전혀 불편해하지 않는다. 자연수처럼 하나씩 셀 수 있는 무한(가산 무한)과
+실수처럼 셀 수조차 없는 무한(비가산 무한)을 구별하고, 어떤 무한이 다른 무한보다
+“더 크다”는 것까지 엄밀하게 따져 놓았다. 무한에 대한 우리의 개념적 이해는 꽤
+깊다.
+
+하지만 실제로 계산을 하는 순간 사정이 달라진다. 손으로 하든, 계산기로 하든,
+컴퓨터나 \textsc{gpu}로 하든, 계산은 결국 물리적인 세계 안에서 일어나고, 물리적인
+세계는 유한하다. 그래서 우리는 유한한 자릿수의 숫자로, 유한한 횟수의 연산만 할
+수 있다. 컴퓨터는 $\pi$의 자릿수를 끝까지 저장할 수 없고, 보통의 계산에서는
+$1/3$조차 어딘가에서 잘라낸 근삿값으로 담는다.\footnote{예를 들어 컴퓨터에서
+$0.1 + 0.2$는 $0.300000000\allowbreak 00000004$가 된다. $0.1$을 이진수로 쓰면 소수점 아래
+자릿수가 끝없이 이어지는데, 이를 유한한 비트에서 잘라 담기 때문이다.}
+$1/3$을 ‘1과 3의 비’로, $\pi$를 하나의 기호로 들고 다니며 정확하게
+계산하는 프로그램도 있다. 하지만 그것도 결국 유한한 비트로 적어 둔 이름과
+규칙일 뿐, 무한한 자릿수를 펼쳐 담은 것은 아니다. 컴퓨터가 무한을
+\emph{모르는} 게 아니라, 무한을 \emph{담을} 수 없는 것이다.
+
+내가 말하는 인간의 이해도 이와 비슷하다. 나는 무한한 존재에 대해 생각할 수 있고,
+그 성질을 어느 정도 짐작하고 이야기할 수도 있다. ‘하나님’이라는 이름으로 그
+존재를 가리킬 수도 있다. 하지만 그 존재 전체를 내 유한한 머릿속에 남김없이
+펼쳐 담을 수는 없다. 만약 그럴 수 있다면 그 존재는 애초에 무한하지 않았다는
+뜻일 것이다. 그래서 하나님이 무한한 존재라면, 내가 하나님을 완전히 이해하지
+못한다는 건 당연한 일이다.
+
+이 글에서 내가 계속 현실을 강조하게 될 텐데, 이것도 같은 맥락이다.
+무한을 아무리 잘 이해하더라도 실제 계산은 유한한 숫자로 해야 하듯이, 무한한
+존재를 향해 열려 있더라도 내가 실제로 살아내는 건 유한한 하루와 유한한 선택들이다.
+
+그렇다고 하나님에 대해 아무것도 알 수 없다는 뜻은 아니다. 우리가 무한에
+도달하지 못하면서도 무한을 이해할 수 있듯이, 인간도 자기에게 주어진 유한한
+경험을 통해 무한한 존재를 조금이나마 느끼고, 이해하고, 추론할 수 있다고
+생각한다(그림~\ref{fig:asymptote}).
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  plate,
+  width=11.8cm, height=6.6cm,
+  xmin=-3, xmax=1.6, ymin=0, ymax=21,
+  axis lines=left,
+  xtick={-3,-2,-1,0,1}, ytick={0,2,4,8,16},
+  xlabel={$x$}, ylabel={$f(x) = \dfrac{1}{1-x}$},
+  ylabel style={rotate=-90,at={(axis description cs:-0.02,1.02)},anchor=south west},
+  xlabel style={at={(axis description cs:1,-0.02)},anchor=north east},
+  clip=false,
+]
+  % the asymptote: where f would be infinite, and which no step reaches
+  \addplot[inkgray,dashed,line width=.45pt] coordinates {(1,0) (1,21)};
+  \node[font=\footnotesize\itshape,anchor=west,align=left]
+    at (axis cs:1.06,15.5) {$x=1$\\$f$가 무한이 되는 자리\\닿지 않는 경계};
+  \addplot[ink,line width=.75pt,domain=-3:0.953,samples=260]
+    {1/(1-x)};
+  \draw[-{Stealth[length=5pt]},ink,line width=.55pt]
+    (axis cs:0.953,21) -- (axis cs:0.957,22.4);
+  % finite values, each one bounded, that together have no ceiling
+  \foreach \k in {1,...,4}{
+    \pgfmathsetmacro{\xk}{1-2^(-\k)}
+    \pgfmathsetmacro{\yk}{2^\k}
+    \addplot[rulegray,line width=.3pt,densely dotted]
+      coordinates {(-3,\yk) (\xk,\yk)};
+    \addplot[only marks,mark=o,mark size=1.8pt,
+             mark options={ink,line width=.45pt,fill=paper}]
+      coordinates {(\xk,\yk)};
+  }
+  \node[font=\footnotesize\itshape,anchor=east,align=right]
+    at (axis cs:0.35,12) {$f(x_n) = 2^n$\\$2, 4, 8, 16, \dots$ 하나하나는 유한하지만,\\
+    위로는 끝이 없다};
+  \draw[inkgray,line width=.3pt,-{Stealth[length=3.5pt]}]
+    (axis cs:0.37,12) -- (axis cs:0.9,15.2);
+\end{axis}
+\end{tikzpicture}
+\caption{점근선 --- 무한을 향해 다가감. 걸음 $x_1, x_2, \dots$마다 얻는 값
+$f(x_n) = 2, 4, 8, 16, \dots$은 하나하나가 모두 유한하지만 위로는 한계가 없다.
+$f$가 무한이 되는 경계 $x=1$에는 결코 서지 못해도, 그 값들이 어디를 향하는지는
+분명히 읽힌다. 도달하지 못한다는 것과 방향을 알 수 없다는 것은 다른 이야기다.}
+\label{fig:asymptote}
+\end{figure}
+
+그래서 나는 하나님을 완전히 증명하는 걸 신앙의 출발점으로 삼고 싶지 않다. 또
+천국이나 영생 같은 삶 이후의 문제를 신앙의 근거나 핵심 요인으로 끌어들이고
+싶지 않다. 내가 매일 살아내는 삶도 이해하지 못하는데 어찌 삶 이후를 논하겠는가?
+또 삶 이후에 어떤 금은보화가 날 기다리고 있다 한들, 그게 내 현재 삶의
+인센티브가 되게 하고 싶지 않다. 마치 전쟁의 승패와 무관하게 장수의 용맹함은 그
+자체로 높이 사야 마땅하고, 화재에서 구출해낸 아기가 살아야만 소방관의 희생이
+고결한 게 아닌 것처럼.
+
+때문에 내 관점은 “진실이 무엇이든 다 좋다. 그리고 그 진실이 무엇인지 우리가
+부분적으로 알아냈다 치자. 하지만 어찌됐든 나는 진실을 완전히 이해하지 못하는
+상태로 현실을 계속해서 살아내야 하는 존재”임을 인정함에서 시작한다. 내가
+이해하지 못하는 삶 이후의 무언가를 위해 현실의 무언가를 포기하거나 희생하진
+않겠다. 고집이라기보단, 정말 그러할 마땅한 이유를 모르겠다.
+
+% =============================================================================
+\section{증명하지 못한다고 해서 없는 건 아니다}
+
+그렇다고 “어차피 증명할 수 없으니까 그냥 믿자. 그게 신앙이다.”라고 말하고 싶은
+건 아니다. 내가 중요하게 보는 건 인간의 인식이 어디까지 갈 수 있느냐는 문제다.
+유한한 인간이 유한한 세계를 이해하는 데는 이성과 경험이 꽤 잘 작동한다. 그런데
+무한한 존재에게까지 똑같은 방식의 증명을 요구하는 게 맞는지는 모르겠다.
+
+그래서 나는 하나님이 존재한다는 걸 완전히 증명했다고 말하지 못한다. 그렇다고
+증명하지 못했으니 하나님이 없다고 말할 수도 없다고 생각한다. 쉽게 말하면
+여기서 어느 정도는 포기하는 셈이다. 하지만 내가 포기하는 건 이성이 아니다.
+“정말 중요한 걸 믿으려면 그 전에 무조건 완벽한 증명이 있어야 한다”는 요구를
+포기하는 것이다.
+
+나는 유한한 인간이고 오늘 자고 일어나면 내일이라는 현실을 또 살아가야 한다.
+궁극적인 진리가 뭔지 완전히 확인할 때까지 내 삶을 정지시켜 놓을 수는 없다.
+나는 오늘도 사람을 만나고, 사랑하거나 미워하고, 감사하거나 불평하고, 성공과
+실패를 겪으면서 살아간다. 그렇다면 결국 나에게 유일하게 남는 유의미한 질문은
+이것이다.
+\begin{center}
+\itshape “궁극적인 진실을 완전히 알 수 없는 상황에서\\
+나는 어떤 방향으로 살아갈 것인가?”
+\end{center}
+
+% =============================================================================
+\section{유용하다고 해서 참인 건 아니다}
+
+나는 하나님을 믿는 게 삶에 도움이 되니까 하나님이 실제로 존재한다고 주장하고
+싶은 게 아니다. 수학에서 무한이라는 개념을 갖고 극한이나 미적분 같은
+도구가 발전했다고 해서, 그 사실 자체가 무한의 존재를 증명해주는 건 아니다.
+
+하나님도 마찬가지다. 내가 하나님을 믿은 뒤에 더 감사하게 되고, 삶이 더
+풍성해졌다고 해서 그게 하나님의 존재를 증명하진 않는다. “나한테 도움이
+된다”와 “그게 실제로 참이다”는 다른 문제이고, 나는 그 둘을 섞고 싶지 않다.
+
+그리고 반대도 마찬가지라고 생각한다. 어떤 믿음이 완전히 증명되지 않았다는
+이유만으로 그 믿음이 내 삶에서 아무 역할도 해서는 안 된다는 결론 역시 나오지
+않는다. 다시 강조하지만 결국 나는 현실을 살아야 한다. 그리고 궁극적인 진실에
+대해 완전한 이해나 확신을 가질 수 없는 상황이라면, 내가 어떤 세계관을 가지고
+사는 게 실제 내 삶을 더 풍성하게 만드는지는 충분히 고려할 만한 문제라고
+생각한다.
+
+% =============================================================================
+\section{설령 그게 어느 정도 낭만이라 해도}
+
+나는 궁극적인 진실과 우리가 실제로 살아가는 현실 사이에는 어느 정도 차이가 있을
+수 있다고 생각한다. 만약 어떤 형이상학적 진실이 정말 존재하는데, 그게 유한한
+인간의 삶과 완전히 동떨어져 있고, 우리가 알 수도 경험할 수도 없고, 실제 삶에
+아무 영향도 주지 않는다면, 굳이 그 진실을 우리가 추구해야 하나 싶다.
+
+반대로 어떤 믿음이 궁극적으로는 일종의 낭만이나 환상일 가능성을 완전히 배제할
+수 없더라도, 그 믿음이 사람으로 하여금 더 감사하고, 더 사랑하고, 자기 삶을 더
+충실하게 살아가게 만든다면 단지 “증명되지 않았다”는 이유만으로 꼭 버려야 할까?
+나는 그렇지는 않다고 생각한다.
+
+물론 이건 내가 거짓이라고 아는 걸 일부러 믿겠다는 말은 아니다. 나는 그게
+거짓인지 참인지 최종적으로 모르는 상태에 있다. 그 상태에서 내가 할 수 있는 건
+현재 나한테 주어진 이성과 경험을 가지고 가장 합리적이라고 생각되는 방향, 그리고
+실제 삶을 가장 풍성하게 만드는 방향을 선택하는 것이다.
+
+그리고 나중에 더 합리적인 설명이나 더 나은 길이 나온다면 내 생각을 바꿀 의향도
+있다. 신앙 때문에 생각을 멈추고 싶지는 않다. 예수님을 믿는다고 고백함으로
+구원을 얻고 내 삶과 그 이후의 문제가 전부 해결됐다고 여기고 싶지도 않다.
+
+% =============================================================================
+\section{그런데 왜 ‘더 나은 삶’이 진실과 관계 있다고 생각하는가}
+
+사실 내 주장은 전부 하나의 전제 위에 서 있다. 우리를
+만든 창조주가 있다는 전제다. 그리고 그 창조주는 앞에서 내가 증명할 수 없다고 말한
+바로 그 대상이다. 그러니 이 장은 “창조주가 있다면”으로 시작하는
+조건문으로 읽혀야 한다.
+
+이 전제를 왜 붙드느냐고 묻는다면 “믿었더니 삶이 풍성해져서”라고 답하고 싶지는
+않다. 그렇게 답하면 삶이 풍성하다는 이유로 창조주를 믿고, 창조주가 있다는 이유로
+풍성한 삶이 진실과 닿아 있다고 말하는 순환논리가 된다. 삶의 풍성함은
+내가 이 전제를 \emph{택하는} 이유는 될 수 있어도, 이 전제가 \emph{참이라는}
+근거는 되지 못한다. 내가 이 전제를 붙드는 건 증명도 반증도 닿지 않는 위치에서,
+유한한 경험들이 가리키는 쪽으로 한 걸음을 내디딘 것에 가깝다. 이 전제
+위에서라면, 나는 궁극적인 진실과 궁극적인 선이 완전히 반대 방향에 있을
+거라고 보지 않는다.
+
+만약 우리를 만든 창조주가 실제로 있고, 우리가 단순히 아무 의미 없이 생겨난
+존재가 아니라 그 창조주의 피조물이라면, 창조에는 어떤 의도가 있을 거라고
+생각한다. 물론 내가 그 의도를 완전히 알 수 없다. 유한한 피조물이 무한한
+창조주의 의도를 다 이해하는 건 불가능하다. 하지만 전혀 알 수 없는 것과 조금이라도
+알아차릴 수 있는 건 다르다.
+
+우리는 살아가면서 사랑, 은혜, 양심, 관계, 감사, 창조성 같은 것들을 경험한다.
+나는 이런 것들을 통해서 무한한 창조주의 의도가 어떤 방향에 있는지 유한한 우리가
+아주 조금이라도 짐작할 수 있다고 생각한다.
+
+피조물에게 좋은 삶이라는 건 결국 자기를 만든 의도와 점점 멀어지는 삶보다는, 그
+의도를 조금이라도 알아채고 그 방향으로 살아가려고 노력하는 삶일 거라고
+생각한다. 아무리 무한이 멀리 떨어져 있어도 방향만 알면 그곳을 향해 유한한
+발걸음으로 나아갈 수 있다. 내가 “궁극적인 진실은 결국 우리의 삶을 더 나은
+방향으로 이끌 것”이라고 생각하는 이유도 여기에 있다.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  plate,
+  width=0.94\linewidth, height=7.4cm,
+  xmin=0, xmax=100, ymin=0, ymax=10.2,
+  axis lines=left,
+  xtick={0,20,...,100}, ytick={0,2,...,10},
+  xlabel={걸음 $n$}, ylabel={$a_n$},
+  xlabel style={at={(axis description cs:1,-0.09)},anchor=north east},
+  ylabel style={rotate=-90,at={(axis description cs:-0.01,1.0)},anchor=south east},
+  grid=major,
+  major grid style={rulegray!40,line width=.2pt},
+  clip=false,
+]
+  % the finite ceiling
+  \addplot[inkgray,dashed,line width=.45pt] coordinates {(0,6) (100,6)};
+  \node[font=\footnotesize\itshape,anchor=south east,inkgray]
+    at (axis cs:100,6.05) {유한한 상한 $L = 6$};
+  % converging: fast, impressive, and finished
+  \addplot[ink,line width=.7pt,densely dashed,domain=0:100,samples=160]
+    {6*(1-exp(-x/6))};
+  % diverging: slow, unimpressive, and unbounded
+  \addplot[ink,line width=.85pt,domain=0:100,samples=200]
+    {0.8*sqrt(x)};
+  \draw[-{Stealth[length=5pt]},ink,line width=.7pt]
+    (axis cs:99,7.96) -- (axis cs:104,8.16);
+  % crossing
+  \addplot[only marks,mark=o,mark size=2.2pt,
+           mark options={ink,line width=.5pt,fill=paper}]
+    coordinates {(56.3,6.0)};
+  \node[font=\footnotesize\itshape,anchor=north west,align=left]
+    at (axis cs:57,5.7) {$n \approx 56$:\\발산하는 쪽이 상한을 넘는다};
+  % labels
+  \node[font=\footnotesize,anchor=south west,align=left]
+    at (axis cs:6,6.7) {수렴 \quad $a_n = 6\,(1-e^{-n/6}) \;\to\; 6$\\
+    \itshape 처음엔 훨씬 높지만, 거기서 멈춘다};
+  \node[font=\footnotesize,anchor=north west,align=left]
+    at (axis cs:22,2.9) {발산 \quad $b_n = 0.8\sqrt{n} \;\to\; \infty$\\
+    \itshape 느리고 낮게 출발해도, 끝이 없다};
+  \node[font=\small,anchor=west] at (axis cs:105,8.25) {$\infty$};
+\end{axis}
+\end{tikzpicture}
+\caption{수렴과 발산. 어느 한 순간의 높이만 비교하면 수렴하는 수열이 앞서
+보일 수 있다. 그러나 한쪽은 아무리 커도 유한한 값 $L$ 아래에 갇히고, 다른
+한쪽은 무한을 향해 열려 있다. 둘은 결과적으로 전혀 다른 모양이다.}
+\label{fig:diverge}
+\end{figure}
+
+절대적인 무한 앞에서 상대적인 위치는 의미 없지만 그 무한을 향해 발산하고
+있다는 사실은 유의미하다(그림~\ref{fig:diverge}). 아무리
+크더라도 특정 유한한 값으로 수렴하는 것과 무한대로 발산하는 건 결과적으로 아예
+다른 모양이다.
+
+창조주가 있고 우리가 그의 피조물이라면, 그 창조의 의도에 가까워지는 삶이
+궁극적으로 우리를 망가뜨리는 방향일 거라고 생각하기는 어렵다. 오히려 피조물이
+자기가 왜 존재하는지에 가까워질수록 더 자기답고 충만한 삶을 살게 되는 게
+자연스럽다고 생각한다.
+
+물론 이 전제가 틀렸을 수도 있다. 창조주가 없다면 이 장에서 말한 진실과 선의 연결도
+함께 무너진다. 그때 내게 남는 건 앞 장에서 말한 것뿐이다. 증명되지 않은
+믿음이었지만, 그 덕분에 조금 더 감사하고 조금 더 사랑하며 살았다는 것. 나는
+그것만으로도 이 선택을 후회하지 않을 것 같다. 다만 그것을 이 전제가 옳았다는
+증거로 삼지는 않겠다.
+
+% =============================================================================
+\section{파스칼의 내기, 판돈을 바꾸면}
+
+여기까지 오면 떠오르는 논증이 하나 있다. 17세기의 수학자이자 철학자였던 블레즈
+파스칼의 ‘내기’다.\footnote{파스칼, 『팡세』, 브룅슈비크 판 단편 233.} 파스칼은
+이성만으로는 신이 있는지 없는지 판가름할 수 없다고 보았다. 그런데도 우리는 어느
+한쪽에 걸 수밖에 없다. 살아간다는 것 자체가 이미 내기판에 올라와 있는 것이기
+때문이다. 그렇다면 어느 쪽에 거는 게 합리적인가. 파스칼의 답은 이렇다. 신이
+있다는 쪽에 걸어서 이기면 무한히 행복한 무한한 생명을 얻고, 지더라도 잃는 것은
+유한하다. 반대쪽에 걸었다가 지면 무한한 것을 잃는다. 그래서 그는 “이기면 모든
+것을 얻고, 져도 아무것도 잃지 않는다”고 말한다(표~\ref{tab:wager}의 (a)).
+
+\begin{table}[htb]
+\centering\footnotesize
+\caption{두 개의 내기. (a)는 파스칼의 표로, 거는 대상은 믿음이고 판돈은 삶 이후의
+무한이다. (b)는 이 글의 변형으로, 거는 대상은 삶의 방향이고 네 칸에는 모두 지금
+이 삶에서 일어나는 유한한 것들이 적힌다.}
+\label{tab:wager}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.8cm}
+                >{\centering\arraybackslash}p{4.6cm}
+                >{\centering\arraybackslash}p{4.6cm}@{}}
+  \multicolumn{3}{@{}l@{}}{\small (a) 파스칼의 내기} \\[0.2em]
+  \toprule
+  & 신이 있다 & 신이 없다 \\
+  \midrule
+  믿는다      & $+\infty$\,· 무한한 생명 & 유한한 손실 \\
+  믿지 않는다 & $-\infty$\,· 무한한 상실 & 유한한 이득 \\
+  \bottomrule
+  \addlinespace[1.4em]
+  \multicolumn{3}{@{}l@{}}{\small (b) 이 글의 변형} \\[0.2em]
+  \toprule
+  & 창조주가 있다 & 창조주가 없다 \\
+  \midrule
+  그 방향으로 산다 & 진실과 선이 한 방향에 놓인다 & 조금 더 감사하고 사랑한 삶 \\
+  그러지 않는다   & 존재의 이유에서 멀어진다     & 이 표로는 판가름할 수 없다 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+
+이 논증은 내 생각과 닮은 데가 많다. 증명할 수 없다는 데서 출발한다는 점, 판단을
+미룬 채로는 살 수 없다는 점, 그리고 그 상태에서 어느 쪽을 고르는 게 합리적인지
+묻는다는 점이 그렇다. 앞에서 “궁극적인 진실을 완전히 알 수 없는 상황에서 나는
+어떤 방향으로 살아갈 것인가?”라고 물었던 것도 결국 같은 질문이다. 다만 나는 이
+내기를 그대로 받아들이지 않고 두 군데를 바꾼다.
+
+첫째, 판돈이 다르다. 파스칼의 표에서 승부를 가르는 건 삶 이후의 무한한 보상과
+상실이다. 앞에서 말했듯 나는 삶 이후의 금은보화를 지금 삶의 인센티브로 삼고 싶지
+않다. 그래서 내 표의 칸에는 무한대 대신 지금 이 삶에서 일어나는 유한한 것들을
+적는다.
+
+둘째, 거는 대상이 다르다. 파스칼은 믿음에 걸라고 한다. 하지만 뒤에서 다시
+말하겠지만, 어떤 명제가 믿어지는 건 내가 고를 수 있는 일이 아니다. 파스칼도 이
+어려움을 알았던 것 같다. 그는 믿음이 생기지 않는 사람에게, 이미 믿는 사람들처럼
+성수를 받고 미사를 드리며 살아보라고 권한다. 나는 그 권유를 조금 다르게 읽는다.
+그렇게 살다 보면 믿음이 생긴다는 데 방점을 찍기보다, 어떻게 살지는 내가 고를 수
+있다는 데 방점을 찍는다. 그래서 내가 거는 건 믿음이 아니라 방향이다.
+
+이렇게 바꾸면 표는 표~\ref{tab:wager}의 (b)처럼 된다. 창조주가 있다면, 그 방향으로 사는 삶은 창조의
+의도와 같은 쪽을 향한다. 앞 장에서 말한 대로 진실과 선이 거기서 만난다. 창조주가
+없다면, 그 삶은 증명되지 않은 믿음 위에서 조금 더 감사하고 조금 더 사랑하며 산
+삶으로 남는다. 그 방향을 택하지 않았는데 창조주가 있다면, 나는 내가 존재하는
+이유에서 조금씩 멀어진 셈이다. 다만 이 손실도 무한한 형벌로 적지 않고, 지금 이
+삶에서 놓친 것으로 적는다. 창조주도 없고 그 방향도 택하지 않았다면, 이 표는 그
+삶에 대해 아무것도 판가름하지 못한다. 그런 사람은 다른 곳에서 자기 방향을 찾을
+것이고, 그것을 내가 낮춰 볼 이유는 없다.
+
+이 변형에서 흥미로운 건 무한이 사라지지 않고 자리를 옮긴다는 점이다. 파스칼에게
+무한은 칸 안에 적힌 보상이었다. 나에게 무한은 보상이 아니라 방향이다. 발산하는
+수열이 어느 한 순간의 높이가 아니라 향하는 곳으로 구별되듯이(그림~\ref{fig:diverge}),
+내가 거는 것도 나중에 받을 무언가가 아니라 매일의 걸음이 향하는 쪽이다.
+
+계산하는 방식도 달라진다. 파스칼의 내기는 흔히 기대값으로 설명된다.\footnote{우월
+논증과 기대값 논증의 구분은 A.~Hájek, “Pascal's Wager,” \emph{Stanford
+Encyclopedia of Philosophy} 참조.} 신이 있을
+확률이 아무리 작아도 무한한 보상을 곱하면 무한이 되니, 거기에 거는 게 낫다는
+식이다. 내 표에는 무한이 없으니 이 계산은 쓸 수 없다. 대신 더 단순한 구조가
+남는다. 윗줄이 두 칸 모두에서 아랫줄보다 못하지 않다면, 창조주가 있을 확률을 몇으로
+잡든 윗줄을 고르는 게 합리적이다. 결정이론에서 ‘우월’이라고 부르는 구조이고,
+파스칼의 논증에도 이 형태가 들어 있다.
+
+물론 여기에는 조건이 하나 붙는다. 창조주가 없는 쪽에서도 그 방향으로 사는 삶이
+그렇지 않은 삶보다 못하지 않아야 한다. 파스칼이 “져도 아무것도 잃지 않는다”고
+말한 자리가 바로 여기다. 나는 이 칸을 증명으로 채우지 못한다. 지금까지 살아보고
+얻은 내 판단으로 채울 뿐이다. 다른 경험을 한 사람은 이 칸을 다르게 채울 수 있고,
+그러면 표의 결론도 달라진다. 이 표가 무엇보다 나에게 유효한 표인 이유다.
+
+파스칼의 내기가 흔히 받는 반론 가운데 하나는 “어느 신에게 걸 것인가”다. 걸 수
+있는 신이 여럿이면 표가 두 줄로는 모자라고, 계산도 무너진다. 내 변형은 이 반론에서
+조금은 자유롭다. 판돈이 올바른 신을 맞히는 데 있지 않고 삶의 방향에 있기 때문이다.
+다른 전통 안에서 자란 누군가도 자기 언어로 같은 표를 그릴 수 있다.
+
+% =============================================================================
+\section{그래서 하나님을 믿는다는 것}
+
+그래서 내게 하나님을 믿는다는 건 단순히 “하늘 어딘가에 초월적인 존재가 하나
+있다”는 명제에 동의하는 것만은 아니다. 또 전통 기독교에서 말하는 “성경적
+삼위일체 하나님을 믿는다”와도 차이가 있을 수 있다.
+
+나는 유한한 존재이고, 내 이해를 넘어서는 무한한 창조주가 존재할 가능성을
+받아들이는 것이다. 그리고 그 창조가 아무 의미 없는 일이 아니라 어떤 의도를
+가지고 있으며, 나 역시 그 의도 안에서 존재하는 피조물이라고 받아들이는 것이다.
+
+하나님의 은혜와 사랑을 경험한다는 것도 나는 이 안에서 이해한다. 내 삶과
+사람들과 내가 가진 능력과 오늘 하루를 그냥 원래 내 것이었던 것처럼 보는 대신,
+어떤 의미에서는 주어진 것으로 받아들이면 삶을 바라보는 방식이 달라진다. 감사할
+이유가 많아진다. 내가 모든 걸 내 힘으로 만들어내고 소유해야 하는 존재가 아니라,
+이미 많은 것을 받은 존재라는 생각도 하게 된다.
+
+그리고 내가 창조주와 아무 상관 없는, 수많은 원자들로 이루어진 고립된 개인이
+아니라 그 관계 안에 있는 존재라고 생각하면 삶은 단순히 먹고 살고 성공하고 죽는
+것 이상이 된다. 창조주와 동행하는 삶을 살게 된다.
+
+나는 그런 의미에서 하나님의 은혜와 사랑 안에서 살아가는 게 현실에서 천국을
+살아가는 한 방식이라고 생각한다. 현실을 떠나는 게 아니라 같은 현실을 조금 다른
+지평에서 살아가는 것이다.
+
+여기까지는 어느 종교의 언어로도 할 수 있는 이야기다. 그렇다면 나는 왜 하필
+기독교의 언어로 이 이야기를 하는가. 먼저 인정할 것은 내가 기독교 안에서
+자랐다는 사실이다. 나는 한 번뿐인 삶을 이 버젼으로 살아왔고, 그만큼 다른
+종교와 교리를 깊이 겪어보지 못했다. 그래서 내 삶의 경험들은 기독교의
+언어로밖에 이어지지 않는다. 다른 길을 모르거나 밀어내는 게 아니다. 서로 다른
+깊이로 알고 있는 것들을 나란히 놓고 우열을 가리는 게 오히려 합리적이지 않다는
+것이다.
+
+다만 그 안에서 자랐다는 이유만으로 기독교를 받아들이고 싶지는 않았다. 이 글은
+주어진 환경 안에서 무엇을, 어떤 기준으로 받아들일지에 대한 기록이다. 그래서 이
+글이 보편적이라면, 그건 내용이 아니라 기준의 차원에서다. 힌두교 안에서 나와
+비슷하게 살아온 누군가가 있다면, 그 사람도 같은 기준으로 자기 종교를 바라볼 수
+있을 것이다.
+
+% =============================================================================
+\section{신앙은 확실성보다 신뢰에 가깝다}
+
+그래서 내게 신앙은 “나는 하나님이 존재한다는 걸 완벽하게 안다”고 말하는 데 있지
+않다. 모르는 건 모른다고 인정하고 싶다. 내가 죽을 때까지 모르는 것도 있을
+것이다.
+
+나는 아직 “예수의 부활”, “구원의 확신”, “천사”, “사탄”, “영혼”, “지옥” 등을
+어떻게 받아들일지 잘 모르겠다. 나는 이것들이 시대적, 종교적, 문학적, 추상적
+개념이나 도구에 더 가까울 수도 있다는 가능성을 남겨두고 싶다. 이것들은 내가
+서 있는 유한한 자리에서는 확인할 길이 없는 이야기들이니까.
+
+그런데 그렇다고 신앙이 불가능한 건 아니라고 생각한다. 오히려 신앙은 내가 모르는
+걸 억지로 안다고 우기는 게 아니라, 내가 어디까지 알 수 있는지를 인정하고 그
+상태에서 어떤 방향으로 살아갈지를 선택하는 것에 더 가깝다.
+
+그리고 지금까지 내가 보고 경험하고 생각한 범위에서는, 창조주와 그 의도를
+인정하고 하나님의 은혜와 사랑 안에서 살아가는 게 그걸 부정하고 사는 것보다 내
+삶을 더 풍성하게 만든다고 생각한다. 이건 그 전제가 참이라는 증거가 아니라,
+참인지 모르는 상태에서 내가 이쪽을 고르는 이유다.
+
+예수님의 기적, 보혈, 죽음과 부활을 부정한다는 게 아니다. 다만 나는 ‘믿는다’는
+말을 조금 다르게 본다. 어떤 주장이 믿어지는 건 내가 원한다고 되는 일이 아니다.
+선언하고 고백한다고 믿어지는 것도 아니고, 누군가에게 이미 믿어진 것을 내가
+설득해서 믿어지지 않게 할 수도 없다. 믿음은 결심이라기보다 받아들여지는 것에
+가깝고, 무엇이 받아들여지는지는 저마다의 경험과 살아가는 시대, 그리고 해석에
+따라 다를 수 있다.
+
+반면 내가 고를 수 있는 건 방향이다. 내게 예수님을 믿는다는 건 유한한 삶을
+이렇게 살아가겠다는 방향을 정하는 일이다. 그렇다면 물어야 할 건 부활이 내게
+믿어지느냐가 아니라, 그것이 내가 정한 방향과 어떤 관계에 있느냐다. 우리는
+무한의 끝을 확인하지 않은 채 무한을 받아들이고,\footnote{집합론에서도
+무한집합의 존재는 증명해서 얻는 정리가 아니라, ‘무한 공리’로 받아들이고
+시작하는 전제다.} 그 위에서 극한을 구하고 미적분을 푼다. 그 끝을 확인하지
+못했다고 계산이 멈추지는 않는다. 마찬가지로 내가 따르려는 삶의 방향은, 부활이
+내게 믿어지든 아직 믿어지지 않든 그대로 남는다.
+
+“그리스도께서 살아나지 않으셨다면, 우리의 선포도 헛되고, 여러분의 믿음도
+헛될 것입니다”라는 바울의 말이 얼마나 무거운지 모르지 않는다.\footnote{고린도전서
+15:14(새번역). 같은 뜻이 15:17에서도 반복된다.} 그래도 성경의 모든 주장을
+하나하나 판가름한 뒤에야 따를 수 있다면, 나는 끝나지 않는 논쟁에 갇혀 정작
+따르는 일은 시작하지 못할 것이다. 천지창조가 며칠 동안
+이뤄졌는지, 홍해가 정말 갈라졌는지, 물이 정말 포도주가 되었는지가 내게
+믿어지든 아니든, 그것이 그 방향을 바꾸지는 않는다. 그래서 설령 부활이 역사적
+사실이 아니라 해도, 내가 예수님의 제자로 살아가지 않을 이유는 아직 뚜렷하지
+않다.
+
+예수님은 율법학자가 “가장 으뜸되는 계명이 무엇인지” 물었을 때, 첫째로 하나님을
+사랑하는 것, 둘째로 네 이웃을 네 자신과 같이 사랑하는 것, 그리고 이보다 더 큰
+계명은 없다고 확고하게 말씀하셨다.\footnote{마가복음 12:28--31; 마태복음
+22:36--40.}
+
+다른 기독교의 교리와 말씀을 내가 전부 이해하고 실천하지 못하더라도, 적어도 이 두
+가지를 삶의 가장 중요한 방향으로 삼는다면 창조주가 의도한 방향으로 살아가는 것이
+아닐까? 마치 복잡한 고차원의 데이터를 이해하기 위해 \textsc{pca}(principal
+component analysis)에서 가장 중요한 두 개의 주성분 위에 데이터를 펼쳐놓고 전체적인
+구조와 방향을 바라보는 것처럼 말이다(그림~\ref{fig:pca}).
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  plate,
+  name=proj,
+  width=8.9cm, height=5.6cm,
+  xmin=-2.7, xmax=3.1, ymin=-2.1, ymax=2.1,
+  axis lines=middle,
+  axis line style={ink,line width=.5pt,-{Stealth[length=4pt]}},
+  xtick=\empty, ytick=\empty,
+  clip=false,
+]
+  \addplot[only marks,mark=*,mark size=1.05pt,
+           mark options={inkgray,draw=inkgray}] coordinates {\pcascatter};
+  % one life, read on the two principal axes
+  \addplot[ink,line width=.7pt,smooth,tension=.55,
+           -{Stealth[length=5.5pt]}]
+    coordinates {(-1.9,-1.5) (-1.05,-1.2) (-.55,-.35) (.35,-.05) (.9,.75) (1.9,1.25)};
+  \addplot[only marks,mark=o,mark size=2pt,
+           mark options={ink,line width=.5pt,fill=paper}]
+    coordinates {(-1.9,-1.5) (-1.05,-1.2) (-.55,-.35) (.35,-.05) (.9,.75)};
+  \node[font=\footnotesize\itshape,anchor=north west] at (axis cs:-1.85,-1.55)
+    {나의 궤적};
+  \node[font=\footnotesize,anchor=north east,align=right,fill=paper,inner sep=1.5pt]
+    at (axis cs:3.1,-.12) {PC\,1\\\itshape 하나님을 사랑하라};
+  \node[font=\footnotesize,anchor=south west,align=left]
+    at (axis cs:.06,2.1) {PC\,2 \quad\itshape 네 이웃을 사랑하라};
+\end{axis}
+\begin{axis}[
+  plate,
+  at={(proj.east)}, anchor=west, xshift=2.1cm,
+  width=5.6cm, height=5.4cm,
+  bar width=6pt,
+  ymin=0, ymax=100, xmin=0.3, xmax=10.7,
+  axis lines=left,
+  xtick={1,...,10}, ytick={0,25,50,75,100},
+  xlabel={주성분}, ylabel={설명된 분산 (\%)},
+  ylabel style={font=\footnotesize\itshape},
+  xlabel style={font=\footnotesize\itshape},
+  tick label style={font=\scriptsize},
+  clip=false,
+]
+  \addplot[ybar,bar shift=0pt,fill=inkgray!35,draw=ink,line width=.35pt]
+    coordinates {\pcascree};
+  \addplot[ybar,bar shift=0pt,fill=ink,draw=ink,line width=.35pt]
+    coordinates {\pcascreetwo};
+  \addplot[ink,line width=.5pt,mark=o,mark size=1.5pt,
+           mark options={fill=paper}] coordinates {\pcacum};
+  \node[font=\scriptsize\itshape,anchor=west,align=left]
+    at (axis cs:2.9,66) {처음 두 축이\\\pcatwo\%를 설명 (예시)};
+\end{axis}
+\end{tikzpicture}
+\caption{주성분 분석(예시 자료). 회색 점은 삶에서 내리는 유한한 선택들이고, 각
+선택은 열 가지 차원을 가진다고 하자. 왼쪽은 선택들을 가장 큰 두 주성분 위에 펼친
+모습, 오른쪽은 각 성분이 설명하는 분산이다. 나머지 여덟 차원은 보이지 않아도,
+흰 점을 이은 나의 궤적이 어디에 서 있고 어디로 가는지는 두 축만으로 읽을 수 있다.}
+\label{fig:pca}
+\end{figure}
+
+모든 차원을 다 보고 있는 것은 아니지만, 가장 중요한 두 축을 통해 적어도 내가 어느
+방향에 서 있고 어디를 향해 가고 있는지는 볼 수 있다. 그래서 나는 지금은 그 방향을
+선택한다.
+
+그렇다고 그 선택 때문에 새로운 증거나 더 나은 설명을 거부하고 싶지는 않다. 더
+합리적인 길이 나온다면 들을 생각도 있고, 필요하다면 내 생각을 바꿀 수도 있다.
+다만 현재까지는 무한을 굳이 부정해야 할 충분한 이유를 찾지 못했다.
+
+유한한 인간으로서 무한을 향해 열려 있고, 나를 만든 창조주의 의도를 조금이라도
+알아가면서 그 방향으로 살아가려고 노력하는 게 지금 내가 할 수 있는 가장
+합리적이고 인간적인 선택이라고 생각한다.
+
+\vspace{0.6em}
+
+\begin{center}
+우린 결코 무한을 완전히 이해할 수는 없다.\\
+그렇지만 그 방향을 보고 살아갈 수는 있다.\\
+나는 신앙이 결국 그런 게 아닐까 생각한다.
+\end{center}
+
+% =============================================================================
+\titlespacing*{\section}{0pt}{2.4ex plus .6ex minus .3ex}{0.9ex plus .2ex}
+\section*{덧붙이는 말}
+
+{\small
+\noindent 이 글은 누군가를 설득하려고 쓴 글이 아니다. 믿지 않는 사람에게 기독교를
+전하려는 것도, 기독교인에게 반론을 제기하려는 것도 아니다. 이 글의 독자는
+무엇보다 나 자신이다. 나는 왜 지금의 신앙을 갖게 되었는지 스스로 돌아보고
+싶었고, 그걸 내가 할 수 있는 만큼 논리적으로 적어보고 싶었다. 적어 내려가는
+동안 나는 더 다양한 생각을 해봤고, 그 과정 자체를 즐겼던 것 같다. 그러니 혹시
+이 글을 읽고 공감이 되었다면, 그건 기독교나 어떤 철학이 옳아서가 아닐 것이다.
+그저 나라는 한 사람의 생각에 공감한 것뿐일 것이다.\par}
+
+% =============================================================================
+\section*{참고문헌}
+
+{\footnotesize
+\begin{list}{}{\setlength{\leftmargin}{1.6em}\setlength{\itemindent}{-1.6em}
+               \setlength{\itemsep}{0.15em}\setlength{\parsep}{0pt}}
+  \item 파스칼, 블레즈. 『팡세』. 1670. 브룅슈비크 판 단편 233.
+  \item Hájek, Alan. “Pascal's Wager.” \emph{Stanford Encyclopedia of
+        Philosophy}. \url{https://plato.stanford.edu/entries/pascal-wager/}.
+  \item 『성경전서 새번역』. 대한성서공회.
+\end{list}\par}
+
+\end{document}
