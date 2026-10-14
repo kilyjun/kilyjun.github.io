@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400&family=Noto+Serif+KR:wght@400&display=swap" rel="stylesheet">
+  <title>Personal &middot; Junhyeok Kil</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    html { scrollbar-gutter: stable; }
+
+    body {
+      font-family: "EB Garamond", "Noto Serif SC", "Noto Serif KR", Georgia, serif;
+      width: 90%;
+      max-width: 740px;
+      margin: 56px auto 80px;
+      font-size: 18px;
+      line-height: 1.55;
+      color: #111;
+      background: #fff;
+    }
+
+    a {
+      color: #0000ee;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+    a:hover { text-decoration-thickness: 2px; }
+
+    /* header */
+    #header {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    #header h1 {
+      font-size: 2.1rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    #header h1 a { color: inherit; text-decoration: none; }
+
+    #header .role {
+      color: #555;
+      margin: 4px 0 14px;
+    }
+
+    #nav-links { font-size: 0.95rem; }
+
+    /* tabs */
+    #nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 25px;
+      margin-bottom: 20px;
+    }
+
+    #nav button {
+      font: inherit;
+      color: #111;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0 0 3px;
+      cursor: pointer;
+    }
+
+    #nav button.active {
+      border-bottom: 2px solid #111;
+    }
+
+    /* sections */
+    section { margin-bottom: 30px; }
+
+    section[hidden] { display: none; }
+
+    section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-variant: small-caps;
+      letter-spacing: 0.05em;
+      color: #111;
+      margin: 0 0 8px;
+    }
+
+    section p {
+      margin: 0 0 14px;
+    }
+
+    section p + h3 {
+      margin-top: 24px;
+    }
+
+    .link-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      counter-reset: item;
+    }
+
+    .link-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 5px 0;
+      counter-increment: item;
+    }
+
+    /* numbers right-align on the period so the titles line up */
+    .link-list li::before {
+      content: counter(item) ".";
+      flex: 0 0 1.7em;
+      text-align: right;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .link-list .meta {
+      white-space: nowrap;
+      color: #777;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-left: auto;
+      padding-left: 20px;
+    }
+
+    /* a second link on the same row, quieter than the title */
+    .link-list .alt-lang {
+      font-size: 0.8rem;
+      color: #888;
+      text-decoration-thickness: 1px;
+    }
+
+    .link-list + h3 { margin-top: 26px; }
+    .link-list + p { margin-top: 22px; }
+
+    /* bookshelf: authors sit where the other lists put their meta */
+    #bookshelf .meta { white-space: normal; text-align: right; }
+
+    @media (max-width: 480px) {
+      body { margin: 28px auto 56px; }
+      #header h1 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- header -->
+<div id="header">
+  <h1><a href="index.html">Junhyeok Kil</a></h1>
+  <p class="role">Outside of research</p>
+  <div id="nav-links">
+    <a href="index.html">&larr; Home</a>
+  </div>
+</div>
+
+<!-- tabs -->
+<div id="nav">
+  <button type="button" data-tab="bookshelf" class="active">Bookshelf</button>
+  <button type="button" data-tab="music">Music</button>
+  <button type="button" data-tab="quotes">Inspirations</button>
+</div>
+
+<section id="writings" hidden>
+  <ul class="link-list">
+    <li>
+      <a href="writings/faith.html">보편적 신앙 (A Universal Faith)</a>
+      <a class="alt-lang" href="writings/faith-zh.html">中文 (AI translation)</a>
+      <span class="meta">20 min read</span>
+    </li>
+  </ul>
+</section>
+
+<section id="bookshelf">
+  <!-- To add a book: copy a list item, then swap the title and author. -->
+  <p>A few books that stayed with me. I still come back to them from time to time and often end up talking about them with people. Many of them I read in 2021&ndash;2022, while serving in the Korean army.</p>
+
+  <h3>Read</h3>
+  <ul class="link-list">
+    <li>
+      <span>The Almanack of Naval Ravikant</span>
+      <span class="meta">Eric Jorgenson</span>
+    </li>
+    <li>
+      <span>Surely You're Joking, Mr. Feynman!</span>
+      <span class="meta">Richard Feynman</span>
+    </li>
+    <li>
+      <span>Love and Math</span>
+      <span class="meta">Edward Frenkel</span>
+    </li>
+    <li>
+      <span>活着 (To Live)</span>
+      <span class="meta">余华</span>
+    </li>
+    <li>
+      <span>Let My People Go Surfing</span>
+      <span class="meta">Yvon Chouinard</span>
+    </li>
+    <li>
+      <span>The Socrates Express</span>
+      <span class="meta">Eric Weiner</span>
+    </li>
+    <li>
+      <span>The Black Swan</span>
+      <span class="meta">Nassim Nicholas Taleb</span>
+    </li>
+    <li>
+      <span>A Gentleman in Moscow</span>
+      <span class="meta">Amor Towles</span>
+    </li>
+    <li>
+      <span>Physics and Philosophy</span>
+      <span class="meta">Werner Heisenberg</span>
+    </li>
+    <li>
+      <span>A Voyage to Arcturus</span>
+      <span class="meta">David Lindsay</span>
+    </li>
+    <li>
+      <span>Demian</span>
+      <span class="meta">Hermann Hesse</span>
+    </li>
+  </ul>
+
+  <h3>Someday</h3>
+  <ul class="link-list">
+    <li>
+      <span>East of Eden</span>
+      <span class="meta">John Steinbeck</span>
+    </li>
+    <li>
+      <span>A Brief History of Intelligence</span>
+      <span class="meta">Max Bennett</span>
+    </li>
+    <li>
+      <span>The Brothers Karamazov</span>
+      <span class="meta">Fyodor Dostoevsky</span>
+    </li>
+    <li>
+      <span>Cloud Atlas</span>
+      <span class="meta">David Mitchell</span>
+    </li>
+    <li>
+      <span>Gödel, Escher, Bach</span>
+      <span class="meta">Douglas Hofstadter</span>
+    </li>
+  </ul>
+</section>
+
+<section id="music" hidden>
+  <p>I spend most of my listening time on classical, like Elgar's cello concerto, Saint-Saëns, and Chopin's études. I liked rock more in middle and high school, when I would try to play songs like Bon Jovi, Coldplay and Radiohead. These days I am increasingly listening to and discovering instrumentals and soundtracks.</p>
+  <p>Across genres, I keep being drawn to something unhurried, usually with a piano at its centre, that opens with grandness and builds until it feels much larger than where it began.</p>
+  <h3>All-time favourites</h3>
+  <ul class="link-list">
+    <li>
+      <a href="https://www.youtube.com/watch?v=C2U-lL_qdTI" target="_blank" rel="noopener">The Cloud Atlas Sextet</a>
+      <span class="meta">Tykwer, Klimek &amp; Heil</span>
+    </li>
+    <li>
+      <a href="https://www.youtube.com/watch?v=btqHrVYO3KI" target="_blank" rel="noopener">New Birth (胎動)</a>
+      <span class="meta">Hayato Sumino</span>
+    </li>
+  </ul>
+
+  <p>I used to make some myself when I was more passionate. A few tracks are still on <a href="https://soundcloud.com/kilyjun" target="_blank" rel="noopener">SoundCloud</a>.</p>
+</section>
+
+<section id="quotes" hidden>
+  <p>This is a collection of pieces that I love, that I share with people around me, and that shaped me.</p>
+  <ul class="link-list">
+    <li>
+      <a href="quotes/jack-london-credo.html">Jack London's Credo</a>
+      <span class="meta">1 min read</span>
+    </li>
+    <li>
+      <a href="quotes/bertrand-russell-art-of-living.html">Bertrand Russell on What Makes a Happy Life</a>
+      <span class="meta">1 min read</span>
+    </li>
+    <li>
+      <a href="quotes/the-pilgrims.html">The Golden Road to Samarkand</a>
+      <span class="meta">1 min read</span>
+    </li>
+    <li>
+      <a href="quotes/a-prayer.html">The Daily Prayer</a>
+      <span class="meta">1 min read</span>
+    </li>
+    <li>
+      <a href="quotes/shakespeare-sonnet-29.html">Shakespeare's Sonnet 29</a>
+      <span class="meta">1 min read</span>
+    </li>
+    <li>
+      <a href="https://slimemoldtimemold.com/2022/02/10/the-scientific-virtues/" target="_blank" rel="noopener">The Scientific Virtues</a>
+      <span class="meta">60 min read</span>
+    </li>
+  </ul>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll("#nav button");
+
+  function showTab(name) {
+    tabs.forEach(t => {
+      const on = t.dataset.tab === name;
+      t.classList.toggle("active", on);
+      document.getElementById(t.dataset.tab).hidden = !on;
+    });
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      showTab(tab.dataset.tab);
+      // keep the open tab in the URL so returning here restores it
+      history.replaceState(null, "", "#" + tab.dataset.tab);
+    });
+  });
+
+  // open the tab named in the hash (e.g. index.html#quotes)
+  function openTabFromHash() {
+    const fromHash = location.hash.slice(1);
+    if (fromHash && document.querySelector('#nav button[data-tab="' + fromHash + '"]')) {
+      showTab(fromHash);
+    }
+  }
+  openTabFromHash();
+  // in-page links like <a href="#bookshelf"> should also switch tabs
+  window.addEventListener("hashchange", openTabFromHash);
+
+
+</script>
+
+</body>
+</html>
