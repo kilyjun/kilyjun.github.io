@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Junhyeok Kil, PhD student in Quantitative Methods at Purdue University.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <title>Junhyeok Kil</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    html { scrollbar-gutter: stable; }
+
+    body {
+      font-family: "EB Garamond", Georgia, serif;
+      width: 90%;
+      max-width: 740px;
+      margin: 56px auto 80px;
+      font-size: 18px;
+      line-height: 1.55;
+      color: #111;
+      background: #fff;
+    }
+
+    a {
+      color: #0000ee;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+    a:hover { text-decoration-thickness: 2px; }
+
+    /* header */
+    #header {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    #header h1 {
+      font-size: 2.1rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    #header h1 a { color: inherit; text-decoration: none; }
+
+    #header .role {
+      color: #555;
+      margin: 4px 0 14px;
+    }
+
+    #nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 22px;
+      font-size: 0.95rem;
+    }
+
+    /* sections */
+    section { margin-bottom: 34px; }
+
+    section h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      font-variant: small-caps;
+      letter-spacing: 0.05em;
+      color: #111;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+      margin: 0 0 14px;
+    }
+
+    section > p {
+      margin: 0 0 14px;
+      /* avoid a lone word on the last line */
+      text-wrap: pretty;
+    }
+
+    /* publication-style entries */
+    .entries {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .entries li { margin-bottom: 14px; }
+
+    .entries.compact li { margin-bottom: 4px; }
+
+    .entries .title { font-weight: 500; }
+
+    .entries .links {
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      body { margin: 28px auto 56px; }
+      #header h1 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- header -->
+<div id="header">
+  <h1><a href="index.html">Junhyeok Kil</a></h1>
+  <p class="role">PhD Student in Quantitative Methods at Purdue University</p>
+  <div id="nav">
+    <!-- address is assembled by the script below so scrapers don't find it in the source -->
+    <a id="email" data-user="kilj" data-domain="purdue.edu">kilj [at] purdue [dot] edu</a>
+    <a href="https://scholar.google.com/citations?user=K0sZiIoAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+  </div>
+</div>
+
+<section id="about">
+  <p>I'm a first-year PhD student in <a href="https://business.purdue.edu/phd/programs/quantitative-methods/home.php">Quantitative Methods</a> at Purdue University, advised by <a href="https://tlim0213.github.io/">Tongseok Lim</a>.</p>
+  <p>I like to think about networks, especially their higher-order structure, using tools from probability and combinatorics. I'm particularly interested in applications in operations research and economics, such as resource pooling, sparse flexibility, and incentives in decentralized systems.</p>
+  <p>I graduated from Purdue in 2025 with a triple major B.S. in Data Science, Mathematics, and Statistics. During that time I spent two years working at the <a href="https://www.purdue.edu/cmsc/">Composites Manufacturing &amp; Simulation Center</a> with <a href="https://engineering.purdue.edu/ME/People/ptProfile?resource_id=120407">Eduardo Barocio</a> and <a href="https://scholar.google.com/citations?hl=en&amp;user=lWoiOrEAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">Akshay Jacob Thomas</a> on physics-informed machine learning and simulation optimization for additive manufacturing.</p>
+  <p>I was born in South Korea, grew up in Singapore, and now live in Indiana. Some things I do <a href="personal.html">outside of&nbsp;research</a>.</p>
+</section>
+
+<section id="research">
+  <h2>Research</h2>
+  <ul class="entries">
+    <li>
+      <span class="title">&ldquo;Physics-Informed Neural Networks to Accelerate Heat Transfer Predictions in Additive Manufacturing&rdquo;</span>
+      (with Akshay Jacob Thomas, Eduardo Barocio, and Ilias Bilionis),
+      <i>SAMPE 2025 Conference &amp; Exhibition</i>, 2025, pp. 1117&ndash;1130.
+      <span class="links">(<a href="research/papers/pinns-heat-transfer-sampe-2025.pdf" target="_blank" rel="noopener">pdf</a>, <a href="research/slides/pinns-heat-transfer-slides.pdf" target="_blank" rel="noopener">slides</a>, <a href="research/posters/pinns-heat-transfer-poster.pdf" target="_blank" rel="noopener">poster</a>)</span>
+    </li>
+  </ul>
+</section>
+
+<section id="teaching">
+  <h2>Teaching</h2>
+  <ul class="entries compact">
+    <li>Instructor, QM 30500: Business Statistics, Fall 2026.</li>
+    <li>Teaching Assistant, CS 47100: Introduction to Artificial Intelligence, Fall 2025.</li>
+    <li>Teaching Assistant, CS 24200: Introduction to Data Science, Fall 2024.</li>
+    <li>Teaching Assistant, CS 17600: Data Engineering in Python, Spring 2024.</li>
+  </ul>
+</section>
+
+<section id="coursework">
+  <h2>Graduate Coursework</h2>
+  <ul class="entries compact">
+    <li>MGMT 69000: Optimal Transport and Unsupervised Learning</li>
+    <li>MA 51100: Linear Algebra with Applications</li>
+    <li>MA 57500: Graph Theory</li>
+    <li>IE 63000: Multiple Objective Optimization</li>
+    <li>MA 57400: Numerical Optimization</li>
+  </ul>
+</section>
+
+<script>
+  const email = document.getElementById("email");
+  const address = email.dataset.user + "@" + email.dataset.domain;
+  email.href = "mailto:" + address;
+  email.textContent = address;
+</script>
+
+</body>
+</html>
